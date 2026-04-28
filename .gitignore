@@ -1,0 +1,62 @@
+# ===== OS / system files =====
+.DS_Store
+Thumbs.db
+
+# ===== Python =====
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.env
+.venv/
+
+# ===== R =====
+.Rhistory
+.RData
+.Rproj.user/
+
+# ===== Jupyter =====
+.ipynb_checkpoints/
+
+# ===== Logs =====
+*.log
+*.out
+*.err
+
+# ===== HPC / SLURM =====
+slurm-*.out
+*.job
+*.sbatch
+
+# ===== Bioinformatics large files =====
+*.bam
+*.bai
+*.sam
+*.fastq
+*.fastq.gz
+*.fq
+*.fq.gz
+*.bed
+*.bigWig
+*.bw
+*.vcf
+*.vcf.gz
+
+# ===== Peak calling outputs =====
+MACS2/
+*.narrowPeak
+*.broadPeak
+
+# ===== Temporary / intermediate files =====
+tmp/
+temp/
+*.tmp
+
+# ===== IDEs =====
+.vscode/
+.idea/
+
+# ===== Misc =====
+*.csv
+*.tsv
