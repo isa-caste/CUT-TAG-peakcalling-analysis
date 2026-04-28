@@ -58,5 +58,4 @@ temp/
 .idea/
 
 # ===== Misc =====
-*.csv
 *.tsv
