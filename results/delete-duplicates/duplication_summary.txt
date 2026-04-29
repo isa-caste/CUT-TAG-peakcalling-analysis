@@ -1,0 +1,10 @@
+Sample Name | Mapped Reads | Duplicated Reads | Duplication Rate (%)
+=================================================================
+
+SUMMARY STATISTICS
+=================================================================
+Total samples processed: 38
+Total mapped reads: 0
+Total duplicated reads: 0
+Overall duplication rate: 0%
+
