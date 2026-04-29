@@ -53,9 +53,7 @@ CUT-TAG-peakcalling-analysis/
     └── motif-analysis/             # HOMER motif results per tool/mark
 ```
 ## Dependancies   
-## Dependencies
-
-All tools were run on an HPC cluster (IU Quartz) using either module load or conda environments.
+All tools were run on an HPC cluster using either module load or conda environments.
 
 ### Module-loaded Tools
 
@@ -101,23 +99,23 @@ bash scripts/download.sh
 ```
 3) Run QC and preprocessing
 ```
-bash scripts/raw-fastqc-multiqc.sh
-bash scripts/trimming.sh
-bash scripts/align.sh
-bash scripts/rm-dups.sh
+sbatch scripts/raw-fastqc-multiqc.sh
+sbatch scripts/trimming.sh
+sbatch scripts/align.sh
+sbatch scripts/rm-dups.sh
 ```
 4) Call Peaks with each tool
 ```
-bash scripts/gopeaks-broad.sh
-bash scripts/macs2.sh
-bash scripts/seacr.sh
+sbatch scripts/gopeaks-broad.sh
+sbatch scripts/macs2.sh
+sbatch scripts/seacr.sh
 ```
 5) Run Validation & analyses
 ```
-bash scripts/encode-comparison.sh
-bash scripts/chromhmm-enrich.sh
+sbatch scripts/encode-comparison.sh
+sbatch scripts/chromhmm-enrich.sh
 python scripts/go-enrich.py
-bash scripts/motif.sh
+sbatch scripts/motif.sh
 ```
 > NOTE <br>
 > Scripts assume an SLURM HPC environment. Adjust resource parameters as needed for your system.
