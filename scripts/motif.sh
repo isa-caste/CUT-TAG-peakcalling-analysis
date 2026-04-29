@@ -12,12 +12,11 @@
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH -A r00750
 
-# HOMER Motif Analysis
-# Find enriched transcription factor binding motifs in peaks
+# HOMER Motif Analysis- find enriched transcription factor binding motifs in peaks
 
 module load bedtools
 
-# --- Paths ---
+# Paths
 PEAK_DIR="/N/project/Krolab/isabella/cutandtag-peak-caller-comparison/results/peak-calling"
 OUT_DIR="/N/project/Krolab/isabella/cutandtag-peak-caller-comparison/results/motif-analysis"
 GENOME="/N/project/Krolab/isabella/data/genomes/hg38/hg38.fa"
@@ -99,7 +98,6 @@ mkdir -p "${PREPARSE_DIR}"
 
 echo ""
 echo "Running HOMER motif analysis..."
-echo "This may take 30-60 minutes..."
 
 findMotifsGenome.pl \
     "${MERGED_SORTED}" \
@@ -110,11 +108,8 @@ findMotifsGenome.pl \
     -p 8 \
     -preparsedDir "${PREPARSE_DIR}"
 
-echo ""
-echo "============================="
-echo "✓ Motif analysis complete for ${CONDITION}"
+echo "Motif analysis complete for ${CONDITION}"
 echo "Output: ${MOTIF_OUT}"
-echo "============================="
 
 # Extract top motifs summary
 if [ -f "${MOTIF_OUT}/knownResults.txt" ]; then

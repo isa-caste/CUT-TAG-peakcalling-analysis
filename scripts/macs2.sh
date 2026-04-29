@@ -15,13 +15,13 @@ module load conda
 source ~/.bashrc
 conda activate macs2_env
 
-# --- Paths ---
+# Paths
 DEDUP_DIR=/N/project/Krolab/isabella/data/dedup-bam-files
 OUT_DIR=/N/project/Krolab/isabella/cutandtag-peak-caller-comparison/results/peak-calling/macs2
 
 mkdir -p "${OUT_DIR}/logs"
 
-# --- Build sample list ---
+# Make sample list
 mapfile -t SAMPLES < <(ls "${DEDUP_DIR}"/*.bam | xargs -n1 basename | sed 's/\.bam$//')
 
 SAMPLE="${SAMPLES[$SLURM_ARRAY_TASK_ID]}"
@@ -31,12 +31,11 @@ echo "============================="
 echo "Sample:     ${SAMPLE}"
 echo "Input BAM:  ${BAM}"
 echo "Array ID:   ${SLURM_ARRAY_TASK_ID}"
-echo "Date:       $(date)"
 echo "============================="
 
 mkdir -p "${OUT_DIR}/${SAMPLE}"
 
-# --- MACS2 peak calling (matching Abbasova et al. 2025) ---
+# MACS2 peak calling
 macs2 callpeak \
     -t "${BAM}" \
     -n "${SAMPLE}" \

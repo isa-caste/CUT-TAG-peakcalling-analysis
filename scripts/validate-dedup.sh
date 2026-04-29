@@ -11,7 +11,6 @@ OUTPUT_DIR="/N/project/Krolab/isabella/cutandtag-peak-caller-comparison/results/
 
 mkdir -p "$OUTPUT_DIR"
 
-echo "=========================================="
 echo "Validating Deduplicated BAM Files"
 echo "=========================================="
 echo "Input directory: $DEDUP_DIR"
@@ -46,7 +45,6 @@ for metrics_file in "$DEDUP_DIR"/*_dedup_metrics.txt; do
     bam_size=$(du -m "$bam_file" | awk '{print $1}')
 
     # Parse Picard metrics file
-    # Format: After header lines, look for the data line with LIBRARY and PERCENT_DUPLICATION
     read_pairs_examined=$(grep -E "^lib[0-9]|^LIBRARY" "$metrics_file" | grep -v "^LIBRARY" | awk '{print $3}')
     duplicates_marked=$(grep -E "^lib[0-9]|^LIBRARY" "$metrics_file" | grep -v "^LIBRARY" | awk '{print $7}')
     percent_dup=$(grep -E "^lib[0-9]|^LIBRARY" "$metrics_file" | grep -v "^LIBRARY" | awk '{print $9}')

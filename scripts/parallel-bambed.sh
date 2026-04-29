@@ -24,18 +24,15 @@ if ! command -v bedtools &> /dev/null; then
     conda install -c bioconda bedtools -y
 fi
 
+# Paths
 BAM_DIR=/N/project/Krolab/isabella/data/dedup-bam-files
 BED_DIR=/N/project/Krolab/isabella/data/bed-files
 
 mkdir -p "$BED_DIR"
 
-echo "=========================================="
 echo "Converting BAM to BED (parallel)"
-echo "=========================================="
 echo "Input BAM directory: $BAM_DIR"
 echo "Output BED directory: $BED_DIR"
-echo "Timestamp: $(date)"
-echo ""
 
 # Count input BAMs
 BAM_COUNT=$(ls -1 "$BAM_DIR"/*_dedup.bam 2>/dev/null | wc -l)
@@ -70,11 +67,8 @@ echo "Processing in parallel..."
 ls "$BAM_DIR"/*_dedup.bam | \
     parallel -j 8 process_bam {} "$BED_DIR"
 
-echo ""
-echo "=========================================="
 echo "SUMMARY"
-echo "=========================================="
-echo "Timestamp: $(date)"
+echo "=========================================
 
 # Count results
 BED_COUNT=$(ls -1 "$BED_DIR"/*.bed 2>/dev/null | wc -l)
@@ -88,4 +82,3 @@ fi
 
 echo ""
 echo "Output location: $BED_DIR"
-echo "Ready for peak calling with MACS2, SEACR, or GoPeaks"

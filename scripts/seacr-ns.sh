@@ -16,7 +16,7 @@ source ~/.bashrc
 module load conda
 conda activate seacr_env
 
-# --- Paths ---
+# Paths
 SEACR=/N/project/Krolab/isabella/tools/SEACR/SEACR_1.3.sh
 BED_DIR=/N/project/Krolab/isabella/data/bed-files
 OUT_DIR=/N/project/Krolab/isabella/cutandtag-peak-caller-comparison/results/peak-calling/seacr
@@ -24,7 +24,7 @@ GENOME_SIZES=/N/project/Krolab/isabella/H3K9me2-Research/annotations/hg38_primar
 
 mkdir -p "${OUT_DIR}/logs"
  
-# --- Build sample list ---
+# Build sample list
 mapfile -t SAMPLES < <(ls -d "${OUT_DIR}"/*_fragments | xargs -n1 basename)
 SAMPLE="${SAMPLES[$SLURM_ARRAY_TASK_ID]}"
  
@@ -36,7 +36,7 @@ echo "============================="
  
 mkdir -p "${OUT_DIR}/${SAMPLE}"
  
-# --- Step 1: Check if bedgraph exists ---
+# Make sure bedgraph exists
 BEDGRAPH="${OUT_DIR}/${SAMPLE}/${SAMPLE}.fragments.bedgraph"
  
 if [ ! -s "${BEDGRAPH}" ]; then
@@ -45,13 +45,8 @@ if [ ! -s "${BEDGRAPH}" ]; then
     exit 1
 fi
  
-echo "Using existing bedgraph: ${BEDGRAPH}"
-# --- Step 2: SEACR peak calling - NON-STRINGENT mode ---
-# Argument order: <bedgraph> <threshold> <norm> <mode> <output_prefix>
-#   0.01          — top 1% signal threshold (no-control mode)
-#   non           — no normalisation (no IgG control available)
-#   non-stringent — relaxed peak calling mode (union of two criteria)
- 
+
+# SEACR peak calling NON-STRINGENT 
 bash "${SEACR}" \
     "${BEDGRAPH}" \
     0.01 \

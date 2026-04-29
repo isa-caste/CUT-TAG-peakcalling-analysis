@@ -16,7 +16,7 @@
 
 module load bedtools
 
-# --- Paths ---
+# Paths
 PEAK_DIR="/N/project/Krolab/isabella/cutandtag-peak-caller-comparison/results/peak-calling"
 OUT_DIR="/N/project/Krolab/isabella/cutandtag-peak-caller-comparison/results/go-enrichment"
 GENES_FILE="/N/project/Krolab/isabella/data/annotations/hg38_genes.bed"
@@ -28,7 +28,6 @@ mkdir -p "${OUT_DIR}/gene-lists"
 TOOLS=("GoPeaks" "MACS2")
 TOOL="${TOOLS[$SLURM_ARRAY_TASK_ID]}"
 
-echo "============================="
 echo "Tool:       ${TOOL}"
 echo "Array ID:   ${SLURM_ARRAY_TASK_ID}"
 echo "============================="
@@ -38,7 +37,7 @@ if [ ! -f "${GENES_FILE}" ]; then
     echo "Downloading hg38 gene annotations..."
     mkdir -p "$(dirname ${GENES_FILE})"
     
-    # Download GENCODE genes (comprehensive gene annotation)
+    # Download GENCODE genes
     wget -O - "https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_44/gencode.v44.basic.annotation.gtf.gz" | \
         gunzip | \
         awk '$3=="gene"' | \
@@ -115,7 +114,7 @@ for SAMPLE in "${ALL_SAMPLES[@]}"; do
     # Extract gene names (column 10 from bedtools closest output)
     cut -f10 "${NEAREST_FILE}" | sort -u >> "${OUT_DIR}/gene-lists/${TOOL}_${MARK}_genes_temp.txt"
     
-    echo "  ✓ Genes mapped"
+    echo "Genes mapped"
     
 done
 
@@ -134,7 +133,5 @@ if [ -f "${OUT_DIR}/gene-lists/${TOOL}_H3K27me3_genes_temp.txt" ]; then
     echo "H3K27me3 gene list: $(wc -l < ${H3K27ME3_GENES}) unique genes"
 fi
 
-echo ""
-echo "============================="
-echo "✓ Gene mapping complete for ${TOOL}"
+echo " Gene mapping complete for ${TOOL}"
 echo "============================="

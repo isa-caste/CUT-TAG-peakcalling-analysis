@@ -1,7 +1,4 @@
 #!/bin/bash
-#SBATCH --account=r00750
-set -euo pipefail
-
 #SBATCH --job-name=rem-dups
 #SBATCH --mail-user=isacaste@iu.edu
 #SBATCH --mail-type=BEGIN,FAIL,END
@@ -19,18 +16,7 @@ module load conda
 conda activate chip_env
 set -u
 
-# Verify Picard is available
-if ! command -v picard &> /dev/null; then
-    echo "ERROR: picard not found in chip_env. Installing..."
-    conda install -c bioconda picard -y
-fi
-
-# Verify samtools is available
-if ! command -v samtools &> /dev/null; then
-    echo "ERROR: samtools not found. Please ensure it's in chip_env"
-    exit 1
-fi
-
+# Paths
 BAM_DIR=/N/project/Krolab/isabella/data/bam-files
 OUT_DIR=/N/project/Krolab/isabella/data/dedup-bam-files
 LOG_DIR=/N/project/Krolab/isabella/data/dedup-bam-files/logs
@@ -38,13 +24,9 @@ LOG_DIR=/N/project/Krolab/isabella/data/dedup-bam-files/logs
 # Create output directories
 mkdir -p "$OUT_DIR" "$LOG_DIR"
 
-echo "=========================================="
 echo "Picard MarkDuplicates - Batch Processing"
-echo "=========================================="
 echo "Input BAM directory: $BAM_DIR"
 echo "Output directory: $OUT_DIR"
-echo "Timestamp: $(date)"
-echo ""
 
 # Count input BAMs
 BAM_COUNT=$(ls -1 "$BAM_DIR"/*_sorted.bam 2>/dev/null | wc -l)
@@ -161,13 +143,10 @@ for BAM in "$BAM_DIR"/*_sorted.bam; do
     echo ""
 done
 
-echo "=========================================="
 echo "SUMMARY"
 echo "=========================================="
 echo "Total processed: $PROCESSED / $BAM_COUNT"
 echo "Failed: $FAILED"
-echo "Timestamp: $(date)"
-echo ""
 
 if [[ $FAILED -eq 0 ]]; then
     echo "All samples processed successfully!"
