@@ -1,0 +1,1 @@
+cmd = /N/project/Krolab/isabella/cutandtag-peak-caller-comparison/results/motif-analysis/GoPeaks_H3K27me3_merged_sorted.bed hg38 /N/project/Krolab/isabella/cutandtag-peak-caller-comparison/results/motif-analysis/GoPeaks_H3K27me3_motifs -size 200 -mask -p 8 -preparsedDir /N/project/Krolab/isabella/cutandtag-peak-caller-comparison/results/motif-analysis/preparsed
